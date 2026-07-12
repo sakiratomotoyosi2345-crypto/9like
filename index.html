@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9Like</title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial, sans-serif;
+        }
+
+        body{
+            background:#111827;
+            color:#fff;
+            line-height:1.6;
+        }
+
+        header{
+            background:#0f172a;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:15px 40px;
+            position:sticky;
+            top:0;
+        }
+
+        .logo{
+            font-size:30px;
+            font-weight:bold;
+            color:#00ff99;
+        }
+
+        nav a{
+            color:#fff;
+            text-decoration:none;
+            margin-left:20px;
+            transition:.3s;
+        }
+
+        nav a:hover{
+            color:#00ff99;
+        }
+
+        .hero{
+            text-align:center;
+            padding:100px 20px;
+        }
+
+        .hero h1{
+            font-size:50px;
+            margin-bottom:15px;
+        }
+
+        .hero p{
+            color:#ccc;
+            margin-bottom:30px;
+        }
+
+        .btn{
+            display:inline-block;
+            padding:15px 35px;
+            background:#00ff99;
+            color:#000;
+            text-decoration:none;
+            border-radius:30px;
+            font-weight:bold;
+            transition:.3s;
+            cursor:pointer;
+            border:none;
+        }
+
+        .btn:hover{
+            transform:scale(1.05);
+        }
+
+        .services{
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+            gap:20px;
+            padding:50px;
+        }
+
+        .card{
+            background:#1f2937;
+            padding:25px;
+            border-radius:12px;
+            text-align:center;
+            transition:.3s;
+        }
+
+        .card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 10px 20px rgba(0,255,153,.3);
+        }
+
+        .card h3{
+            color:#00ff99;
+            margin-bottom:10px;
+        }
+
+        .card p{
+            color:#ddd;
+        }
+
+        /* Withdrawal Section Styles */
+        .withdrawal-section{
+            background:#1f2937;
+            margin:50px auto;
+            padding:40px;
+            border-radius:12px;
+            max-width:600px;
+            box-shadow:0 10px 20px rgba(0,255,153,.2);
+        }
+
+        .withdrawal-section h2{
+            color:#00ff99;
+            margin-bottom:30px;
+            text-align:center;
+            font-size:28px;
+        }
+
+        .form-group{
+            margin-bottom:20px;
+        }
+
+        .form-group label{
+            display:block;
+            margin-bottom:8px;
+            color:#ddd;
+            font-weight:bold;
+        }
+
+        .form-group input,
+        .form-group select{
+            width:100%;
+            padding:12px;
+            border:1px solid #00ff99;
+            border-radius:8px;
+            background:#111827;
+            color:#fff;
+            font-size:14px;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus{
+            outline:none;
+            border-color:#00ff99;
+            box-shadow:0 0 10px rgba(0,255,153,.3);
+        }
+
+        .fee-info{
+            background:#0f172a;
+            padding:20px;
+            border-radius:8px;
+            margin:20px 0;
+            border-left:4px solid #00ff99;
+        }
+
+        .fee-info p{
+            color:#ddd;
+            margin-bottom:10px;
+        }
+
+        .fee-amount{
+            font-size:20px;
+            font-weight:bold;
+            color:#00ff99;
+        }
+
+        .fee-account{
+            background:#1a3a2a;
+            padding:15px;
+            border-radius:8px;
+            margin-top:15px;
+            border:1px solid #00ff99;
+        }
+
+        .fee-account-title{
+            font-weight:bold;
+            color:#00ff99;
+            margin-bottom:10px;
+            font-size:14px;
+        }
+
+        .account-detail{
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            padding:8px 0;
+            border-bottom:1px solid #004d33;
+        }
+
+        .account-detail:last-child{
+            border-bottom:none;
+        }
+
+        .account-detail-label{
+            color:#aaa;
+            font-size:13px;
+        }
+
+        .account-detail-value{
+            color:#00ff99;
+            font-weight:bold;
+            word-break:break-all;
+        }
+
+        .copy-btn{
+            background:#00ff99;
+            color:#000;
+            border:none;
+            padding:5px 10px;
+            border-radius:4px;
+            cursor:pointer;
+            font-weight:bold;
+            font-size:12px;
+            margin-left:10px;
+        }
+
+        .copy-btn:hover{
+            background:#00e680;
+        }
+
+        .withdrawal-btn{
+            width:100%;
+            padding:15px;
+            background:#00ff99;
+            color:#000;
+            border:none;
+            border-radius:8px;
+            font-weight:bold;
+            font-size:16px;
+            cursor:pointer;
+            transition:.3s;
+            margin-top:10px;
+        }
+
+        .withdrawal-btn:hover{
+            transform:scale(1.02);
+            background:#00e680;
+        }
+
+        .success-message{
+            display:none;
+            background:#0f5f3a;
+            color:#00ff99;
+            padding:15px;
+            border-radius:8px;
+            text-align:center;
+            margin-top:15px;
+            border:1px solid #00ff99;
+        }
+
+        .error-message{
+            display:none;
+            background:#5f0f0f;
+            color:#ff4444;
+            padding:15px;
+            border-radius:8px;
+            text-align:center;
+            margin-top:15px;
+            border:1px solid #ff4444;
+        }
+
+        footer{
+            background:#0f172a;
+            text-align:center;
+            padding:20px;
+            margin-top:40px;
+            color:#bbb;
+        }
+
+        @media(max-width:768px){
+            header{
+                flex-direction:column;
+            }
+
+            nav{
+                margin-top:10px;
+            }
+
+            nav a{
+                display:inline-block;
+                margin:8px;
+            }
+
+            .hero h1{
+                font-size:36px;
+            }
+
+            .services{
+                padding:20px;
+            }
+
+            .withdrawal-section{
+                margin:20px;
+                padding:20px;
+            }
+
+            .account-detail{
+                flex-direction:column;
+                align-items:flex-start;
+            }
+
+            .copy-btn{
+                margin-left:0;
+                margin-top:8px;
+                width:100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">9Like</div>
+
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#withdraw">Withdraw</a>
+        <a href="#contact">Contact</a>
+    </nav>
+</header>
+
+<section class="hero" id="home">
+    <h1>Welcome to 9Like</h1>
+    <p>Fast and secure social media growth platform.</p>
+
+    <a href="#withdraw" class="btn">Get Started</a>
+</section>
+
+<section class="services" id="services">
+
+<div class="card">
+<h3>TikTok Likes</h3>
+<p>Increase your TikTok likes instantly.</p>
+</div>
+
+<div class="card">
+<h3>Instagram Likes</h3>
+<p>Boost your Instagram engagement.</p>
+</div>
+
+<div class="card">
+<h3>Followers</h3>
+<p>Grow your audience quickly.</p>
+</div>
+
+<div class="card">
+<h3>Views</h3>
+<p>Get more video views across platforms.</p>
+</div>
+
+</section>
+
+<!-- Withdrawal Section -->
+<section class="withdrawal-section" id="withdraw">
+    <h2>💰 Withdraw Your Earnings</h2>
+    
+    <form id="withdrawForm">
+        <div class="form-group">
+            <label for="fullname">Full Name</label>
+            <input type="text" id="fullname" name="fullname" required placeholder="Enter your full name">
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
+        </div>
+
+        <div class="form-group">
+            <label for="amount">Withdrawal Amount (₦)</label>
+            <input type="number" id="amount" name="amount" required placeholder="Enter amount to withdraw" min="1000">
+        </div>
+
+        <div class="form-group">
+            <label for="bankname">Bank Name</label>
+            <input type="text" id="bankname" name="bankname" required placeholder="e.g., GTBank, Access Bank">
+        </div>
+
+        <div class="form-group">
+            <label for="accountnumber">Account Number</label>
+            <input type="text" id="accountnumber" name="accountnumber" required placeholder="Enter your account number">
+        </div>
+
+        <div class="form-group">
+            <label for="accountname">Account Name</label>
+            <input type="text" id="accountname" name="accountname" required placeholder="Enter account holder name">
+        </div>
+
+        <!-- Fee Information -->
+        <div class="fee-info">
+            <p>💳 <strong>Withdrawal Fee:</strong></p>
+            <p class="fee-amount">₦7,000.00 (Fixed)</p>
+            <p style="font-size:12px; color:#aaa; margin-top:8px;">This fee will be deducted from your withdrawal amount</p>
+            
+            <!-- Fee Payment Account Details -->
+            <div class="fee-account">
+                <div class="fee-account-title">📱 Pay Withdrawal Fee To:</div>
+                <div class="account-detail">
+                    <span class="account-detail-label">Bank:</span>
+                    <span class="account-detail-value">Kuda Bank</span>
+                </div>
+                <div class="account-detail">
+                    <span class="account-detail-label">Account Number:</span>
+                    <span class="account-detail-value" id="feeAccount">2081509082</span>
+                    <button type="button" class="copy-btn" onclick="copyToClipboard('2081509082')">Copy</button>
+                </div>
+                <div class="account-detail">
+                    <span class="account-detail-label">Amount:</span>
+                    <span class="account-detail-value">₦7,000.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Amount Summary -->
+        <div class="fee-info" style="border-left-color:#ff6b6b;">
+            <p>📊 <strong>Amount Breakdown:</strong></p>
+            <p>Withdrawal Amount: <span id="displayAmount" style="color:#00ff99;">₦0.00</span></p>
+            <p>Withdrawal Fee: <span style="color:#ff6b6b;">-₦7,000.00</span></p>
+            <hr style="border:1px solid #333; margin:8px 0;">
+            <p>Amount to Receive: <span id="finalAmount" style="color:#00ff99; font-weight:bold;">₦0.00</span></p>
+        </div>
+
+        <button type="submit" class="withdrawal-btn">Proceed with Withdrawal</button>
+
+        <div class="success-message" id="successMessage">
+            ✅ Withdrawal request submitted successfully! Your payment will be processed within 24 hours after fee confirmation.
+        </div>
+
+        <div class="error-message" id="errorMessage">
+            ❌ Please fill in all fields correctly.
+        </div>
+    </form>
+</section>
+
+<footer id="contact">
+© 2026 9Like. All Rights Reserved. | Withdrawal Fee: ₦7,000 per transaction | Kuda Bank: 2081509082
+</footer>
+
+<script>
+    // Welcome Message
+    window.onload = function () {
+        console.log("Welcome to 9Like!");
+    };
+
+    // Copy to Clipboard Function
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Account number copied to clipboard!");
+        });
+    }
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll("nav a").forEach(link => {
+        link.addEventListener("click", function (e) {
+            e.preventDefault();
+
+            const target = document.querySelector(this.getAttribute("href"));
+
+            if (target) {
+                target.scrollIntoView({
+                    behavior: "smooth"
+                });
+            }
+        });
+    });
+
+    // Get Started button
+    const btn = document.querySelector(".btn");
+
+    if (btn) {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            document.querySelector("#withdraw").scrollIntoView({
+                behavior: "smooth"
+            });
+        });
+    }
+
+    // Card hover animation
+    document.querySelectorAll(".card").forEach(card => {
+        card.addEventListener("mouseenter", () => {
+            card.style.transform = "translateY(-8px)";
+        });
+
+        card.addEventListener("mouseleave", () => {
+            card.style.transform = "translateY(0)";
+        });
+    });
+
+    // Withdrawal Form Logic
+    const amountInput = document.getElementById("amount");
+    const withdrawForm = document.getElementById("withdrawForm");
+    const successMessage = document.getElementById("successMessage");
+    const errorMessage = document.getElementById("errorMessage");
+
+    const WITHDRAWAL_FEE = 7000;
+
+    // Update amount display when user types
+    amountInput.addEventListener("input", function() {
+        const amount = parseFloat(this.value) || 0;
+        document.getElementById("displayAmount").textContent = "₦" + amount.toLocaleString("en-NG", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        
+        const finalAmount = Math.max(0, amount - WITHDRAWAL_FEE);
+        document.getElementById("finalAmount").textContent = "₦" + finalAmount.toLocaleString("en-NG", {minimumFractionDigits: 2, maximumFractionDigits: 2});
+    });
+
+    // Form submission
+    withdrawForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const fullname = document.getElementById("fullname").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const amount = parseFloat(document.getElementById("amount").value);
+        const bankname = document.getElementById("bankname").value.trim();
+        const accountnumber = document.getElementById("accountnumber").value.trim();
+        const accountname = document.getElementById("accountname").value.trim();
+
+        // Validation
+        if (!fullname || !email || !amount || !bankname || !accountnumber || !accountname) {
+            errorMessage.textContent = "❌ Please fill in all fields correctly.";
+            errorMessage.style.display = "block";
+            successMessage.style.display = "none";
+            return;
+        }
+
+        if (amount < 1000) {
+            errorMessage.textContent = "❌ Minimum withdrawal amount is ₦1,000";
+            errorMessage.style.display = "block";
+            successMessage.style.display = "none";
+            return;
+        }
+
+        if (accountnumber.length < 10) {
+            errorMessage.textContent = "❌ Please enter a valid account number";
+            errorMessage.style.display = "block";
+            successMessage.style.display = "none";
+            return;
+        }
+
+        // If validation passes
+        errorMessage.style.display = "none";
+        successMessage.style.display = "block";
+
+        // Log withdrawal details (in real app, send to server)
+        console.log({
+            fullname,
+            email,
+            amount,
+            fee: WITHDRAWAL_FEE,
+            finalAmount: amount - WITHDRAWAL_FEE,
+            bankname,
+            accountnumber,
+            accountname,
+            feePaymentBank: "Kuda",
+            feePaymentAccount: "2081509082",
+            timestamp: new Date().toLocaleString()
+        });
+
+        // Reset form
+        withdrawForm.reset();
+        document.getElementById("displayAmount").textContent = "₦0.00";
+        document.getElementById("finalAmount").textContent = "₦0.00";
+
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+            successMessage.style.display = "none";
+        }, 5000);
+    });
+</script>
+
+</body>
+</html>
